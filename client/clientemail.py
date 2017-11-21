@@ -8,8 +8,8 @@ from email.MIMEBase import MIMEBase
 from email.mime.image import MIMEImage
 from email import encoders
 
-class Email(filename):
-    def __init__():
+class Email():
+    def __init__(filename):
         conf = json.load(open(conf.json)).read
 
         msg = MIMEMultipart()
