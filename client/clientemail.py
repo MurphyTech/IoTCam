@@ -10,7 +10,7 @@ from email import encoders
 
 class Email():
     def __init__(self, filename):
-        config = json.load(open(conf.json)).read
+        config = json.load(open("conf.json")).read
 
         msg = MIMEMultipart()
         msg['From'] = config["fromaddr"]
