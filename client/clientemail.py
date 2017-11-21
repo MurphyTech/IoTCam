@@ -9,15 +9,15 @@ from email.mime.image import MIMEImage
 from email import encoders
 
 class Email():
-    def __init__(filename):
-        conf = json.load(open(conf.json)).read
+    def __init__(self, filename):
+        config = json.load(open(conf.json)).read
 
         msg = MIMEMultipart()
-        msg['From'] = conf["fromaddr"]
-        msg['To'] = conf["COMMASPACE"].join(conf["toaddr"])
+        msg['From'] = config["fromaddr"]
+        msg['To'] = config["COMMASPACE"].join(config["toaddr"])
         msg['Subject'] = "IOT Camera"
 
-        msg.attach(MIMEText(conf["message"],"plain"))
+        msg.attach(MIMEText(config["message"],"plain"))
 
         attachment = open(filename, 'rb')
 
