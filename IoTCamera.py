@@ -1,6 +1,6 @@
 # import the necessary packages
 from temp.tempimage import TempImage
-from client.clientemail import email
+from client.clientemail import Email
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 import argparse
