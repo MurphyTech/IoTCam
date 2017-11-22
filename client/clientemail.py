@@ -12,12 +12,12 @@ class Email():
     def __init__(self, filename):
         config = json.load(open('conf.json', 'r'))
 
-        print config
-
         msg = MIMEMultipart()
         msg['From'] = config["fromaddr"]
         msg['To'] = config["COMMASPACE"].join(config["toaddr"])
         msg['Subject'] = "IOT Camera"
+
+        print("[SUCCESS] - Message created...")
 
         msg.attach(MIMEText(config["message"],"plain"))
 
@@ -27,6 +27,8 @@ class Email():
         part.set_payload((attachment).read())
         encoders.encode_base64(part)
         part.add_header('Content-Disposition', "attachment; filename= %s" +filename)
+
+        print("[SUCCESS] - Image file attached...")
 
         msg.attach(part)
         text = msg.as_string()
@@ -40,4 +42,4 @@ class Email():
         server.sendmail(fromaddr, toaddr, text)
         server.quit()
 
-        print 'done'
+        print("[SUCCESS] - Message Sent...")
