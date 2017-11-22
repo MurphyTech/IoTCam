@@ -1,8 +1,9 @@
 {
 	"show_video": true,
 	"use_dropbox": true,
-	"dropbox_access_token": "YOUR_DROPBOX_KEY",
-	"dropbox_base_path": "YOUR_DROPBOX_PATH",
+	"use_email": true,
+	"dropbox_access_token": "e7i8rFaoNhUAAAAAAAADfhjqMBIeIKfYpUPFOMlJNNJkHg_e6bqKjUwSlqXKWLgM",
+	"dropbox_base_path": "IoTCamera",
 	"min_upload_seconds": 3.0,
 	"min_motion_frames": 8,
 	"camera_warmup_time": 2.5,

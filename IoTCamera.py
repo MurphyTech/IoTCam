@@ -44,6 +44,13 @@ avg = None
 lastUploaded = datetime.datetime.now()
 motionCounter = 0
 
+
+#Define face cascade
+	#
+	#TODO : correct path for pi opencv install
+	#
+face_cascade = cv2.CascadeClassifier('/home/david/opencv/data/haarcascades/haarcascade_frontalface_default.xml')
+
 # capture frames from the camera
 for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
 	# grab the raw NumPy array representing the image and initialize
@@ -90,6 +97,10 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 		(x, y, w, h) = cv2.boundingRect(c)
 		cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 		text = "Occupied"
+		#FACE
+		faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+		for (x,y,w,h) in faces:
+    		cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
 
 	# draw the text and timestamp on the frame
 	ts = timestamp.strftime("%A %d %B %Y %I:%M:%S%p")
@@ -100,6 +111,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 
     # check to see if the room is occupied
 	if text == "Occupied":
+
 		# check to see if enough time has passed between uploads
 		if (timestamp - lastUploaded).seconds >= conf["min_upload_seconds"]:
 			# increment the motion counter
@@ -119,7 +131,8 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 					path = "/{base_path}/{timestamp}.jpg".format(
 					    base_path=conf["dropbox_base_path"], timestamp=ts)
 					client.files_upload(open(t.path, "rb").read(), path)
-					Email(path)
+					if conf["use_email"]:
+						Email(path)
 					t.cleanup()
 
 				# update the last uploaded timestamp and reset the motion
