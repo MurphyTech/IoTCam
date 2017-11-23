@@ -49,7 +49,7 @@ motionCounter = 0
 	#
 	#TODO : correct path for pi opencv install
 	#
-face_cascade = cv2.CascadeClassifier('/home/david/opencv/data/haarcascades/haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('/home/pi/opencv-3.3.0/data/haarcascades/haarcascade_frontalface_default.xml')
 
 # capture frames from the camera
 for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
