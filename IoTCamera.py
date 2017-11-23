@@ -46,9 +46,6 @@ motionCounter = 0
 
 
 #Define face cascade
-	#
-	#TODO : correct path for pi opencv install
-	#
 face_cascade = cv2.CascadeClassifier('/home/pi/opencv-3.3.0/data/haarcascades/haarcascade_frontalface_default.xml')
 
 # capture frames from the camera
@@ -99,9 +96,9 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 		text = "Occupied"
 		#FACE
 		faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-		for (x,y,w,h) in faces:
-    		cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
-
+		for (a,b,d,e) in faces:
+	    		cv2.rectangle(frame,(a,b),(a+d,b+e),(255,0,0),2)
+			text = "Face"
 	# draw the text and timestamp on the frame
 	ts = timestamp.strftime("%A %d %B %Y %I:%M:%S%p")
 	cv2.putText(frame, "Room Status: {}".format(text), (10, 20),
@@ -132,7 +129,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 					    base_path=conf["dropbox_base_path"], timestamp=ts)
 					client.files_upload(open(t.path, "rb").read(), path)
 					if conf["use_email"]:
-						Email(path)
+						Email(t.path)
 					t.cleanup()
 
 				# update the last uploaded timestamp and reset the motion

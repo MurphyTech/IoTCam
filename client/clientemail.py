@@ -1,3 +1,4 @@
+
 import os
 import smtplib
 import sys
@@ -9,8 +10,9 @@ from email.mime.image import MIMEImage
 from email import encoders
 
 class Email():
-    def __init__(self, filename):
-        config = json.load(open('conf.json', 'r'))
+    def __init__(self, imagefile):
+
+        config = json.load(open("client/config.json", 'r'))
 
         msg = MIMEMultipart()
         msg['From'] = config["fromaddr"]
@@ -20,7 +22,9 @@ class Email():
         print("[SUCCESS] - Message created...")
 
         msg.attach(MIMEText(config["message"],"plain"))
-
+	imagefile = imagefile[2:len(imagefile)]
+	wd = "/home/pi/IoTCam/IoTCam"
+	filename = wd + imagefile
         attachment = open(filename, 'rb')
 
         part = MIMEBase('application', 'octet-stream')
@@ -37,9 +41,9 @@ class Email():
         server.ehlo()
         server.starttls()
         server.ehlo()
-        server.login(fromaddr, 'raspberrypi')
+        server.login(config["fromaddr"], 'raspberrypi')
 
-        server.sendmail(fromaddr, toaddr, text)
+        server.sendmail(config["fromaddr"],config["toaddr"], text)
         server.quit()
 
         print("[SUCCESS] - Message Sent...")
